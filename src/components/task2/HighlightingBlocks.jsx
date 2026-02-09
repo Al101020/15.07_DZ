@@ -1,37 +1,96 @@
-// import { useState } from 'react';
-// import './crud.css';
-// import AllNotes from './AllNotes'
-// import { indexUU } from './indexUU';
+import './HighlightingBlocks.css';
+import { v4 as uuidv4 } from 'uuid';
 
-function HighlightingBlocks() {
-  console.log('HighlightingBlocks');
-  
-  return (
-    <>
-      <div className='task2'>
-        {/* <div id='crudTitle'>
-          <div className='notes'>
-            <h1 className='titleTask'>Notes</h1>
-          </div>
-          <button id='updateBtn' onClick={updateNotes}>Обнавить</button>
+import React, { useState } from 'react';
+
+function New(props) {
+    return (
+        <div className="wrap-item wrap-item-new">
+            <span className="label">New!</span>
+            {props.children}
         </div>
-        <div id='divAllNotes'>
-          <AllNotes props={allNotes} funcDel={delNote} />
-        </div>
-        <div id='crudBottom'>
-          <div>New Note</div>
-          <div>
-            <form>
-              <textarea name='textareaNewNote' id='textareaNewNote' rows='5' cols='45'
-              value={NewNote} onChange={(e) => setNewNote(e.target.value)} required />
-              <br />
-              <button name='addNote' id='addNote' onClick={addNewNote}>Добавить</button>
-            </form>
-          </div>
-        </div> */}
-      </div>
-    </>
-  )
+    )
 };
 
-export default HighlightingBlocks;
+function Popular(props) {
+    return (
+        <div className="wrap-item wrap-item-popular">
+            <span className="label">Popular!</span>
+            {props.children}
+        </div>
+    )
+};
+
+function Article(props) {
+    return (
+        <div className="item item-article">
+            <h3><a href="#">{props.title}</a></h3>
+            <p className="views">Прочтений: {props.views}</p>
+        </div>
+    )
+};
+
+function Video(props) {
+    return (
+        <div className="item item-video">
+            {/* <iframe src={props.url} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> */}
+            <iframe src={props.url} allow="autoplay; encrypted-media" allowFullScreen></iframe>
+            <p className="views">Просмотров: {props.views}</p>
+        </div>
+    )
+};
+
+function List(props) {
+    return props.list.map(item => {
+        switch (item.type) {
+            case 'video':
+                return (
+                    <Video {...item} key={uuidv4()} />
+                );
+
+            case 'article':
+                return (
+                    <Article {...item} key={uuidv4()} />
+                );
+        }
+    });
+};
+
+export default function HighlightingBlocks() {
+    const [list, setList] = useState([
+        {
+            type: 'video',
+            url: 'https://www.youtube.com/embed/rN6nlNC9WQA?rel=0&amp;controls=0&amp;showinfo=0',
+            views: 50
+        },
+        {
+            type: 'video',
+            url: 'https://www.youtube.com/embed/dVkK36KOcqs?rel=0&amp;controls=0&amp;showinfo=0',
+            views: 12
+        },
+        {
+            type: 'article',
+            title: 'Невероятные события в неизвестном поселке...',
+            views: 175
+        },
+        {
+            type: 'article',
+            title: 'Секретные данные были раскрыты!',
+            views: 1532
+        },
+        {
+            type: 'video',
+            url: 'https://www.youtube.com/embed/TKmGU77INaM?rel=0&amp;controls=0&amp;showinfo=0',
+            views: 4253
+        },
+        {
+            type: 'article',
+            title: 'Кот Бегемот обладает невероятной...',
+            views: 12,
+        },
+    ]);
+
+    return (
+        <List list={list} />
+    );
+}
