@@ -1,60 +1,8 @@
 import './HighlightingBlocks.css';
-import { v4 as uuidv4 } from 'uuid';
 
 import React, { useState } from 'react';
 
-function New(props) {
-    return (
-        <div className="wrap-item wrap-item-new">
-            <span className="label">New!</span>
-            {props.children}
-        </div>
-    )
-};
-
-function Popular(props) {
-    return (
-        <div className="wrap-item wrap-item-popular">
-            <span className="label">Popular!</span>
-            {props.children}
-        </div>
-    )
-};
-
-function Article(props) {
-    return (
-        <div className="item item-article">
-            <h3><a href="#">{props.title}</a></h3>
-            <p className="views">Прочтений: {props.views}</p>
-        </div>
-    )
-};
-
-function Video(props) {
-    return (
-        <div className="item item-video">
-            {/* <iframe src={props.url} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> */}
-            <iframe src={props.url} allow="autoplay; encrypted-media" allowFullScreen></iframe>
-            <p className="views">Просмотров: {props.views}</p>
-        </div>
-    )
-};
-
-function List(props) {
-    return props.list.map(item => {
-        switch (item.type) {
-            case 'video':
-                return (
-                    <Video {...item} key={uuidv4()} />
-                );
-
-            case 'article':
-                return (
-                    <Article {...item} key={uuidv4()} />
-                );
-        }
-    });
-};
+import List from './List';
 
 export default function HighlightingBlocks() {
     const [list, setList] = useState([
@@ -91,6 +39,8 @@ export default function HighlightingBlocks() {
     ]);
 
     return (
-        <List list={list} />
+        <div className='task2'>
+            <List list={list} />
+        </div>
     );
 }
