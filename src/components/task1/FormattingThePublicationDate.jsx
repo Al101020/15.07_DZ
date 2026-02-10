@@ -1,31 +1,9 @@
 import './FormattingThePublicationDate.css';
 import { useEffect, useState } from 'react';
 
-import { v4 as uuidv4 } from 'uuid';
-// import funcMoment from './funcMoment';
-
-function DateTime(props) {
-    return (
-        <p className="date">{props.date}</p>
-    )
-}
-
-function Video(props) {
-  return (
-    <div className="video">
-      <iframe src={props.url} allow="autoplay; encrypted-media" allowFullScreen></iframe>
-      <DateTime date={props.date} />
-    </div>
-  )
-}
-
-function VideoList(props) {
-  return props.list.map(item => <Video url={item.url} date={item.date} key={uuidv4()} />);
-}
+import VideoList from './VideoList';
 
 function FormattingThePublicationDate() {
-  console.log('FormattingThePublicationDate');
-
   const [list, setList] = useState([
     {
       url: 'https://www.youtube.com/embed/rN6nlNC9WQA?rel=0&amp;controls=0&amp;showinfo=0',
