@@ -2,45 +2,33 @@ import Video from './Video';
 import Article from './Article';
 import { v4 as uuidv4 } from 'uuid';
 
-import New from './New';
-import Popular from './Popular';
+import newHOC from './newHOC';
+const NewVideo = newHOC(Video);
+const NewArticle = newHOC(Article);
+
+import popularHOC from './popularHOC';
+const PopularVideo = popularHOC(Video);
+const PopularArticle = popularHOC(Article);
 
 export default function List(props) {
   return props.list.map(item => {
-    if (item.views < 100) {
+        if (item.views < 100) {
       
       switch (item.type) {
         case 'video':
-          return (
-            <New key={uuidv4()}>
-              <Video {...item} />
-            </New>
-          );
+          return <NewVideo {...item} key={uuidv4()} />;
 
         case 'article':
-          return (
-            <New key={uuidv4()}>
-              <Article {...item} />
-            </New>
-          );
+          return <NewArticle {...item} key={uuidv4()} />;
       }
-
     } else if (item.views > 1000) {
             
       switch (item.type) {
         case 'video':
-          return (
-            <Popular key={uuidv4()}>
-              <Video {...item} />
-            </Popular>
-          );
+          return <PopularVideo {...item} key={uuidv4()} />;
 
         case 'article':
-          return (
-            <Popular key={uuidv4()}>
-              <Article {...item} />
-            </Popular>
-          );
+          return <PopularArticle {...item} key={uuidv4()} />;
       }
 
     } else {
@@ -53,7 +41,7 @@ export default function List(props) {
 
         case 'article':
           return (
-              <Article {...item} key={uuidv4()} />
+            <Article {...item} key={uuidv4()} />
           );
       }
 
